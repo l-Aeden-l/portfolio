@@ -1,0 +1,145 @@
+/**
+ * -------------------------------
+ * Author: Frédéric HAUGUEL
+ * Methodology: Best practices CSS (https://cssguidelin.es/)
+ * Code editor: Visual Studio Code
+ * Extension used: Better align (ctrl + shift + a)
+ * -------------------------------
+ * 
+ * TABLE OF CONTENTS: 
+ * - VARIABLES
+ *     Colors.....................FLAT UI COLOR PALETTE
+ *     Wrapper margins............For airing the document
+ *     Screen sizes...............Small, medium, large and extra large
+ *     
+ * - BASE
+ *     General settings...........Unavoidable values to set (title, link, etc.)
+ *     Container..................Wrap all the website content
+ *
+ * -------------------------------
+ * Breakpoints reminder (
+ * -------------------------------
+ * Extra small devices (phones, 600px and down)
+ * @media only screen and (max-width: 600px) {...}
+ *
+ * Small devices (portrait tablets and large phones, 600px and up)
+ * @media only screen and (min-width: 600px) {...}
+ *
+ * Medium devices (landscape tablets, 768px and up)
+ * @media only screen and (min-width: 768px) {...}
+ *
+ * Large devices (laptops/desktops, 992px and up)
+ * @media only screen and (min-width: 992px) {...}
+ *
+ * Extra large devices (large laptops and desktops, 1200px and up)
+ * @media only screen and (min-width: 1200px) {...}
+ */
+
+
+
+/*------------------------------------*\
+  #BASE
+\*------------------------------------*/
+
+:root {
+  /**
+   * FLAT UI PALETTE V1
+   * SRC: https: //flatuicolors.com/
+   */
+  --turquoise            : #1abc9c;
+  --darken-turquoise     : #16a085;
+  --green                : #2ecc71;
+  --darken-green         : #27ae60;
+  --blue                 : #3498db;
+  --darken-blue          : #2980b9;
+  --purple               : #9b59b6;
+  --darken-purple        : #8e44ad;
+  --deep-blue-gray       : #34495e;
+  --darken-deep-blue-gray: #2c3e50;
+  --yellow               : #f1c40f;
+  --orange               : #f39c12;
+  --darken-orange        : #e67e22;
+  --deep-orange          : #d35400;
+  --red                  : #e74c3c;
+  --darken-red           : #c0392b;
+  --light-gray           : #ecf0f1;
+  --darken-light-gray    : #bdc3c7;
+  --gray                 : #95a5a6;
+  --darken-gray          : #7f8c8d;
+
+  /* --- Wrapper margin --- */
+  --wrapperMargin: 2em;
+
+  /* --- Screen sizes --- */
+  --small-dev: calc(660px - var(--wrapperMargin));
+  --medium-dev: calc(768px - var(--wrapperMargin));
+  --large-dev: calc(992px - var(--wrapperMargin));
+  --extra-large-dev: calc(1200px - var(--wrapperMargin));
+
+  --large-profile: calc(var(--large-dev) / 3);
+  --extra-large-profile: calc(var(--large-dev) / 4);
+}
+
+
+
+/*------------------------------------*\
+  #BASE
+\*------------------------------------*/
+
+/* --- General settings --- */
+html {
+  box-sizing      : border-box;
+  background-color: var(--light-gray);
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+/* --- Container --- */
+#wrapper {
+  display            : grid;
+  margin             : var(--wrapperMargin) auto;
+  height             : calc(100vh - (2 * var(--wrapperMargin)));
+  grid-template      : repeat(3, 1fr)/1fr repeat(2, 1fr); gap: 1rem;
+  grid-template-areas: 
+  "profil introduction introduction"
+  "profil skills skills"
+  "profil achievements achievements";
+}
+
+@media only screen and (min-width: 992px) {
+  #wrapper {
+  width                : var(--large-dev);
+  grid-template-columns: minmax(var(--large-profile),var(--large-profile)) repeat(2, 1fr);
+  }
+}
+@media only screen and (min-width: 1200px) {
+  #wrapper {
+    width                : var(--extra-large-dev);
+    grid-template-columns: minmax(var(--extra-large-profile),var(--extra-large-profile)) repeat(2, 1fr);
+  }
+}
+aside, section { 
+  background-color: white;
+  border          : solid 1px black;
+  padding         : 0.5rem;
+}
+
+
+
+/*------------------------------------*\
+  #BASE
+\*------------------------------------*/
+
+aside#profil {
+  grid-area: profil;
+}
+section#introduction {
+  grid-area: introduction;
+}
+section#skills {
+  grid-area: skills;
+}
+section#achievements {
+  grid-area: achievements;
+}

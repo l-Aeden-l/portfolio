@@ -14,13 +14,13 @@
  *     Profil column size.........Adapt the profile column width according to the screen
  *     Fonts......................Ratio calculation for titles and text sizes
  *   CUSTOM CLASSES
- *     Box shadows
+ *     Box shadows................
  * - BASE
  *     General settings...........Unavoidable values to set (title, link, etc.)
  * - GRID
  *     Container..................Wrap all the website content
  * - COMPONENTS
- *     Navigation.................Navigate through the different sections
+ *     Navigation.................Navigate through the different sections (to do)
  *     Profil.....................Useful informations as localisation, phone, social network, etc.
  *     Introduction...............A short introduction about me
  *     Skills.....................A list of knowledge that I acquired
@@ -81,10 +81,10 @@
   --wrapperMargin: 1rem;
 
   /* --- Screen sizes --- */
-  --small-dev      : calc(660px - var(--wrapperMargin));
-  --medium-dev     : calc(768px - var(--wrapperMargin));
-  --large-dev      : calc(992px - var(--wrapperMargin));
-  --extra-large-dev: calc(1200px - var(--wrapperMargin));
+  --small-dev      : calc(660px - (2 * var(--wrapperMargin));
+  --medium-dev     : calc(768px - (2 * var(--wrapperMargin));
+  --large-dev      : calc(992px - (2 * var(--wrapperMargin));
+  --extra-large-dev: calc(1200px - (2 * var(--wrapperMargin));
 
   /* --- Profil column size --- */
   --medium-profile-col: calc(var(--large-dev) / 4);
@@ -100,7 +100,21 @@
   --regular : calc(var(--baseline) * 1.25);
 }
 
-
+  @media only screen and (max-width: 768px) {
+    :root {
+      --baseline: 0.95rem;
+    }
+  }
+  @media only screen and (min-width: 992px) {
+    :root {
+      --baseline: 1rem;
+    }
+  }
+  @media only screen and (min-width: 1200px) {
+    :root {
+      --baseline: 1.05rem;
+    }
+  }
 
 /*------------------------------------*\
   #CUSTOM CLASSES
@@ -163,21 +177,8 @@ body {
   font-size: var(--regular);
 }
 
-@media only screen and (max-width: 768px) {
-  :root {
-    --baseline: 0.95rem;
-  }
-}
-@media only screen and (min-width: 992px) {
-  :root {
-    --baseline: 1rem;
-  }
-}
-@media only screen and (min-width: 1200px) {
-  :root {
-    --baseline: 1.05rem;
-  }
-}
+
+
 /*------------------------------------*\
   #GRID
 \*------------------------------------*/

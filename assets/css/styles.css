@@ -1,8 +1,8 @@
 /**
  * -------------------------------
- * Author: Frédéric HAUGUEL
- * Methodology: Best practices CSS (https://cssguidelin.es/)
- * Code editor: Visual Studio Code
+ * Author        : Frédéric HAUGUEL
+ * Methodology   : Best practices CSS (https://cssguidelin.es/)
+ * Code editor   : Visual Studio Code
  * Extension used: Better align (ctrl + shift + a)
  * -------------------------------
  * 
@@ -11,13 +11,23 @@
  *     Colors.....................FLAT UI COLOR PALETTE
  *     Wrapper margins............For airing the document
  *     Screen sizes...............Small, medium, large and extra large
- *     
+ *     Profil column size.........Adapt the profile column width according to the screen
+ *     Fonts......................Ratio calculation for titles and text sizes
+ *   CUSTOM CLASSES
+ *     Box shadows
  * - BASE
  *     General settings...........Unavoidable values to set (title, link, etc.)
+ * - GRID
  *     Container..................Wrap all the website content
+ * - COMPONENTS
+ *     Navigation.................Navigate through the different sections
+ *     Profil.....................Useful informations as localisation, phone, social network, etc.
+ *     Introduction...............A short introduction about me
+ *     Skills.....................A list of knowledge that I acquired
+ *.....Achievements...............Some of my creations
  *
  * -------------------------------
- * Breakpoints reminder (
+ * Breakpoints reminder
  * -------------------------------
  * Extra small devices (phones, 600px and down)
  * @media only screen and (max-width: 600px) {...}
@@ -38,13 +48,13 @@
 
 
 /*------------------------------------*\
-  #BASE
+  #VARIABLES
 \*------------------------------------*/
 
 :root {
   /**
    * FLAT UI PALETTE V1
-   * SRC: https: //flatuicolors.com/
+   * SRC: https:   //flatuicolors.com/
    */
   --turquoise            : #1abc9c;
   --darken-turquoise     : #16a085;
@@ -68,67 +78,148 @@
   --darken-gray          : #7f8c8d;
 
   /* --- Wrapper margin --- */
-  --wrapperMargin: 2em;
+  --wrapperMargin: 1rem;
 
   /* --- Screen sizes --- */
-  --small-dev: calc(660px - var(--wrapperMargin));
-  --medium-dev: calc(768px - var(--wrapperMargin));
-  --large-dev: calc(992px - var(--wrapperMargin));
+  --small-dev      : calc(660px - var(--wrapperMargin));
+  --medium-dev     : calc(768px - var(--wrapperMargin));
+  --large-dev      : calc(992px - var(--wrapperMargin));
   --extra-large-dev: calc(1200px - var(--wrapperMargin));
 
-  --large-profile: calc(var(--large-dev) / 3);
-  --extra-large-profile: calc(var(--large-dev) / 4);
+  /* --- Profil column size --- */
+  --medium-profile-col: calc(var(--large-dev) / 4);
+  --large-profile-col : calc(var(--large-dev) / 3.5);
+
+  /* --- Fonts --- */
+  --baseline: 1rem;
+  --h1      : calc(var(--baseline) * 2.50);
+  --h2      : calc(var(--baseline) * 2.25);
+  --h3      : calc(var(--baseline) * 2);
+  --h4      : calc(var(--baseline) * 1.75);
+  --h5      : calc(var(--baseline) * 1.50);
+  --regular : calc(var(--baseline) * 1.25);
 }
 
 
+
+/*------------------------------------*\
+  #CUSTOM CLASSES
+\*------------------------------------*/
+
+/* --- Box shadows ---*/
+.box-shadow-depth-1 {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+.box-shadow-depth-2 {
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+.box-shadow-depth-3 {
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+
+.box-shadow-depth-4 {
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+.box-shadow-depth-5 {
+  box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+}
 
 /*------------------------------------*\
   #BASE
 \*------------------------------------*/
 
 /* --- General settings --- */
+*, *:before, *:after {
+  box-sizing: border-box;
+}
 html {
-  box-sizing      : border-box;
   background-color: var(--light-gray);
 }
-*, *:before, *:after {
-  box-sizing: inherit;
+h1 {
+  font-size: var(--h1);
+  margin   : var(--h1) 0;
 }
+h2 {
+  font-size: var(--h2);
+  margin   : var(--h2) 0;
+}
+h3 {
+  font-size: var(--h3);
+  margin   : var(--h3) 0;
+}
+h4 {
+  font-size: var(--h4);
+  margin   : var(--h4) 0;
+}
+h5 {
+  font-size: var(--h5);
+  margin   : var(--h5) 0;
+}
+
+body {
+  font-size: var(--regular);
+}
+
+@media only screen and (max-width: 768px) {
+  :root {
+    --baseline: 0.95rem;
+  }
+}
+@media only screen and (min-width: 992px) {
+  :root {
+    --baseline: 1rem;
+  }
+}
+@media only screen and (min-width: 1200px) {
+  :root {
+    --baseline: 1.05rem;
+  }
+}
+/*------------------------------------*\
+  #GRID
+\*------------------------------------*/
 
 /* --- Container --- */
 #wrapper {
   display            : grid;
   margin             : var(--wrapperMargin) auto;
+  padding            : var(--wrapperMargin);
   height             : calc(100vh - (2 * var(--wrapperMargin)));
-  grid-template      : repeat(3, 1fr)/1fr repeat(2, 1fr); gap: 1rem;
+  grid-template      : repeat(3, 1fr) / 1fr 2fr; gap: var(--wrapperMargin);
   grid-template-areas: 
-  "profil introduction introduction"
-  "profil skills skills"
-  "profil achievements achievements";
+  "profil introduction"
+  "profil skills"
+  "profil achievements";
 }
-
-@media only screen and (min-width: 992px) {
-  #wrapper {
-  width                : var(--large-dev);
-  grid-template-columns: minmax(var(--large-profile),var(--large-profile)) repeat(2, 1fr);
+  @media only screen and (max-width: 768px) {
+    #wrapper {
+      grid-template      : repeat(4, 1fr) / 1fr;
+      grid-template-areas: 
+      "profil"
+      "introduction"
+      "skills"
+      "achievements";
+    }
   }
-}
-@media only screen and (min-width: 1200px) {
-  #wrapper {
-    width                : var(--extra-large-dev);
-    grid-template-columns: minmax(var(--extra-large-profile),var(--extra-large-profile)) repeat(2, 1fr);
+  @media only screen and (min-width: 768px) {
+    #wrapper {
+      grid-template-columns: minmax(var(--medium-profile-col),var(--medium-profile-col));
+    }
   }
-}
-aside, section { 
-  background-color: white;
-  border          : solid 1px black;
-  padding         : 0.5rem;
-}
+  @media only screen and (min-width: 1200px) {
+    #wrapper {
+      max-width            : var(--extra-large-dev);
+      grid-template-columns: minmax(var(--large-profile-col),var(--large-profile-col));
+    }
+  }
 
 
 
 /*------------------------------------*\
-  #BASE
+  #COMPONENTS
 \*------------------------------------*/
 
 aside#profil {
@@ -142,4 +233,10 @@ section#skills {
 }
 section#achievements {
   grid-area: achievements;
+}
+
+aside, section { 
+  background-color: white;
+  box-shadow      : 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  padding         : 0.5rem;
 }

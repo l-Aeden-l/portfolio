@@ -7,13 +7,16 @@
  * -------------------------------
  * 
  * TABLE OF CONTENTS: 
+ * -------------------------------
+ * - MATERIAL ICONS (GOOGLE)
+ * -------------------------------
  * - VARIABLES
  *     Colors.....................FLAT UI COLOR PALETTE
  *     Wrapper margins............For airing the document
  *     Screen sizes...............Small, medium, large and extra large
  *     Profil column size.........Adapt the profile column width according to the screen
  *     Fonts......................Ratio calculation for titles and text sizes
- *   CUSTOM CLASSES
+ * - CUSTOM CLASSES
  *     Box shadows................
  * - BASE
  *     General settings...........Unavoidable values to set (title, link, etc.)
@@ -44,6 +47,14 @@
  * Extra large devices (large laptops and desktops, 1200px and up)
  * @media only screen and (min-width: 1200px) {...}
  */
+
+
+
+/*------------------------------------*\
+  #MATERIAL ICONS (GOOGLE)
+\*------------------------------------*/
+
+@import '../fonts/material-design-icons/material-icons.css';
 
 
 
@@ -81,23 +92,29 @@
   --wrapperMargin: 1rem;
 
   /* --- Screen sizes --- */
-  --small-dev      : calc(660px - (2 * var(--wrapperMargin));
-  --medium-dev     : calc(768px - (2 * var(--wrapperMargin));
-  --large-dev      : calc(992px - (2 * var(--wrapperMargin));
-  --extra-large-dev: calc(1200px - (2 * var(--wrapperMargin));
+  --small-dev      : calc(660px - (2 * var(--wrapperMargin)));
+  --medium-dev     : calc(768px - (2 * var(--wrapperMargin)));
+  --large-dev      : calc(992px - (2 * var(--wrapperMargin)));
+  --extra-large-dev: calc(1200px - (2 * var(--wrapperMargin)));
 
-  /* --- Profil column size --- */
+  /* --- Profile column size --- */
   --medium-profile-col: calc(var(--large-dev) / 4);
   --large-profile-col : calc(var(--large-dev) / 3.5);
 
   /* --- Fonts --- */
-  --baseline: 1rem;
-  --h1      : calc(var(--baseline) * 2.50);
-  --h2      : calc(var(--baseline) * 2.25);
-  --h3      : calc(var(--baseline) * 2);
-  --h4      : calc(var(--baseline) * 1.75);
-  --h5      : calc(var(--baseline) * 1.50);
-  --regular : calc(var(--baseline) * 1.25);
+  --baseline          : 1rem;
+  --title-margin-ratio: 0.50;
+  --h1                : calc(var(--baseline) * 2.50);
+  --h1-margin         : calc(var(--h1) * var(--title-margin-ratio));
+  --h2                : calc(var(--baseline) * 2.25);
+  --h2-margin         : calc(var(--h2) * var(--title-margin-ratio));
+  --h3                : calc(var(--baseline) * 2);
+  --h3-margin         : calc(var(--h3) * var(--title-margin-ratio));
+  --h4                : calc(var(--baseline) * 1.75);
+  --h4-margin         : calc(var(--h4) * var(--title-margin-ratio));
+  --h5                : calc(var(--baseline) * 1.50);
+  --h5-margin         : calc(var(--h5) * var(--title-margin-ratio));
+  --regular           : calc(var(--baseline) * 1.25);
 }
 
   @media only screen and (max-width: 768px) {
@@ -105,16 +122,8 @@
       --baseline: 0.95rem;
     }
   }
-  @media only screen and (min-width: 992px) {
-    :root {
-      --baseline: 1rem;
-    }
-  }
-  @media only screen and (min-width: 1200px) {
-    :root {
-      --baseline: 1.05rem;
-    }
-  }
+
+
 
 /*------------------------------------*\
   #CUSTOM CLASSES
@@ -154,27 +163,32 @@ html {
 }
 h1 {
   font-size: var(--h1);
-  margin   : var(--h1) 0;
+  margin   : var(--h1-margin) 0;
 }
 h2 {
   font-size: var(--h2);
-  margin   : var(--h2) 0;
+  margin   : var(--h2-margin) 0;
 }
 h3 {
   font-size: var(--h3);
-  margin   : var(--h3) 0;
+  margin   : var(--h3-margin) 0;
 }
 h4 {
   font-size: var(--h4);
-  margin   : var(--h4) 0;
+  margin   : var(--h4-margin) 0;
 }
 h5 {
   font-size: var(--h5);
-  margin   : var(--h5) 0;
+  margin   : var(--h5-margin) 0;
 }
 
 body {
   font-size: var(--regular);
+}
+
+img {
+  width : 100%;
+  height: auto;
 }
 
 
@@ -186,20 +200,22 @@ body {
 /* --- Container --- */
 #wrapper {
   display            : grid;
+  width              : auto;
   margin             : var(--wrapperMargin) auto;
   padding            : var(--wrapperMargin);
   height             : calc(100vh - (2 * var(--wrapperMargin)));
-  grid-template      : repeat(3, 1fr) / 1fr 2fr; gap: var(--wrapperMargin);
+  grid-template      : 0.5fr repeat(2, 1fr) / 1fr 2fr;
+  gap                : var(--wrapperMargin);
   grid-template-areas: 
-  "profil introduction"
-  "profil skills"
-  "profil achievements";
+  "profile introduction"
+  "profile skills"
+  "profile achievements";
 }
   @media only screen and (max-width: 768px) {
     #wrapper {
       grid-template      : repeat(4, 1fr) / 1fr;
       grid-template-areas: 
-      "profil"
+      "profile"
       "introduction"
       "skills"
       "achievements";
@@ -223,8 +239,8 @@ body {
   #COMPONENTS
 \*------------------------------------*/
 
-aside#profil {
-  grid-area: profil;
+aside#profile {
+  grid-area: profile;
 }
 section#introduction {
   grid-area: introduction;
@@ -236,8 +252,33 @@ section#achievements {
   grid-area: achievements;
 }
 
-aside, section { 
+#wrapper > aside, #wrapper > section { 
   background-color: white;
   box-shadow      : 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-  padding         : 0.5rem;
+  padding         : var(--wrapperMargin);
+}
+
+
+/* --- PROFIL (aside) --- */
+section#personal-details {
+  display       : flex;
+  flex-direction: column;
+}
+  section#personal-details h2 {
+    text-align: center;
+  }
+  address ul {
+    list-style: none;
+    padding   : 0;
+  }
+  address ul li {
+    line-height: calc(var(--baseline) * 2);
+  }
+      .material-icons {
+        vertical-align: middle;
+      }
+
+/* --- INTRODUCTION (1er section) --- */
+section#introduction p {
+  text-align: justify;
 }

@@ -1,0 +1,11 @@
+- firstname: "Frédéric"
+  lastname: "HAUGUEL"
+  img_profile: "/assets/img/data/profile/frederic_hauguel.png"
+  status: "Autodidacte"
+  location:
+    class: "person_pin_circle"
+    city: "Larmor-Plage"
+  contact:
+    class: "email"
+    text: "Contactez-moi !"
+    email: "hauguel.frederic@gmail.com"

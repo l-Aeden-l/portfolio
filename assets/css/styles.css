@@ -8,22 +8,21 @@
  * 
  * TABLE OF CONTENTS: 
  * -------------------------------
- * - MATERIAL ICONS (GOOGLE)
- * -------------------------------
+ * - FONTS
+ *     OpenSans regular...........Main font of the website
+ *     Material icons.............Use Google icons
  * - VARIABLES
  *     Colors.....................FLAT DESIGN COLORS
- *     Wrapper margins............For airing the document
  *     Screen sizes...............Small, medium, large and extra large
  *     Profil column size.........Adapt the profile column width according to the screen
  *     Fonts......................Ratio calculation for titles and text sizes
+ *     Nav bar height.............Calculate the content position (profil column, main content) according to the nav bar
  * - CUSTOM CLASSES
  *     Box shadows................
  * - BASE
  *     General settings...........Unavoidable values to set (title, link, etc.)
- * - GRID
- *     Container..................Wrap all the website content
  * - COMPONENTS
- *     Navigation.................Navigate through the different sections (to do)
+ *     Navigation.................Navigate through the different sections
  *     Profil.....................Useful informations as localisation, phone, social network, etc.
  *     Introduction...............A short introduction about me
  *     Skills.....................A list of knowledge that I acquired
@@ -72,11 +71,11 @@
 :root {
   /**
    * FLAT DESIGN COLORS
-   * https://laochao.github.io/Colors/flat.html
-   * The used one: https://color.koya.io/
+   * https       :          //laochao.github.io/Colors/flat.html
+   * The used one: https:   //color.koya.io/
    * --------------------------------
-   * Other interesting color palettes:
-   * https://flatuicolors.com/
+   * Other interesting color palettes: 
+   * https                           :   //flatuicolors.com/
    */
   --mint              : #48CFAD;
   --darken-mint       : #37BC9B;
@@ -101,18 +100,11 @@
   --charcoal          : #3C3B3D;
   --darken-charcoal   : #323133;
 
-  /* --- Wrapper margin --- */
-  --wrapperMargin: 1rem;
-
   /* --- Screen sizes --- */
-  --small-dev      : calc(660px - (2 * var(--wrapperMargin)));
-  --medium-dev     : calc(768px - (2 * var(--wrapperMargin)));
-  --large-dev      : calc(992px - (2 * var(--wrapperMargin)));
-  --extra-large-dev: calc(1200px - (2 * var(--wrapperMargin)));
-
-  /* --- Profile column size --- */
-  --medium-profile-col: calc(var(--large-dev) / 4);
-  --large-profile-col : calc(var(--large-dev) / 3.5);
+  --small-dev      : calc(660px);
+  --medium-dev     : calc(768px);
+  --large-dev      : calc(992px);
+  --extra-large-dev: calc(1200px);
 
   /* --- Fonts --- */
   --baseline          : 0.90rem;
@@ -128,6 +120,20 @@
   --h5                : calc(var(--baseline) * 1.50);
   --h5-margin         : calc(var(--h5) * var(--title-margin-ratio));
   --regular           : calc(var(--baseline) * 1.25);
+
+  /* --- Nav height --- */
+  --navHeight: 60px;
+
+  /* --- Profile column size --- */
+  --one-quarter-extra-large: calc(var(--extra-large-dev) / 4);
+  --one-fifth-of-one-quarter-extra-large: calc(var(--one-quarter-extra-large) / 4);
+  --large-profile-col: calc(var(--large-dev) / 4);
+  --extra-large-profile-column : calc(var(--extra-large-dev) / 4);
+
+  /* --- Main content width --- */
+  --grid-gap: 1rem;
+  --large-main-column: calc((var(--one-quarter-extra-large) * 2) - (2 * var(--one-fifth-of-one-quarter-extra-large)) - (2 * var(--grid-gap)));
+  --extra-large-main-column: calc((var(--one-quarter-extra-large) * 2) - (2 * var(--grid-gap)));
 }
 
   @media only screen and (max-width: 768px) {
@@ -172,9 +178,12 @@
   box-sizing: border-box;
 }
 html {
-  background-color: var(--darken-light-gray);
-  font-family: 'open_sansregular', Arial, sans-serif;
-  color: var(--darken-charcoal);
+  background-color: var(--light-gray);
+  font-family     : 'open_sansregular', Arial, sans-serif;
+  color           : var(--darken-charcoal);
+}
+body {
+  margin: 0;
 }
 h1 {
   font-size: var(--h1);
@@ -206,47 +215,10 @@ img {
   height: auto;
 }
 
-
-
-/*------------------------------------*\
-  #GRID
-\*------------------------------------*/
-
-/* --- Container --- */
-#wrapper {
-  display            : grid;
-  width              : auto;
-  margin             : var(--wrapperMargin) auto;
-  padding            : var(--wrapperMargin);
-  height             : calc(100vh - (2 * var(--wrapperMargin)));
-  grid-template      : 0.5fr repeat(2, 1fr) / 1fr 2fr;
-  gap                : var(--wrapperMargin);
-  grid-template-areas: 
-  "profile introduction"
-  "profile skills"
-  "profile achievements";
+a {
+  text-decoration: none;
+  color          : var(--darken-charcoal);
 }
-  @media only screen and (max-width: 768px) {
-    #wrapper {
-      grid-template      : repeat(4, 1fr) / 1fr;
-      grid-template-areas: 
-      "profile"
-      "introduction"
-      "skills"
-      "achievements";
-    }
-  }
-  @media only screen and (min-width: 768px) {
-    #wrapper {
-      grid-template-columns: minmax(var(--medium-profile-col),var(--medium-profile-col));
-    }
-  }
-  @media only screen and (min-width: 1200px) {
-    #wrapper {
-      max-width            : var(--extra-large-dev);
-      grid-template-columns: minmax(var(--large-profile-col),var(--large-profile-col));
-    }
-  }
 
 
 
@@ -254,55 +226,141 @@ img {
   #COMPONENTS
 \*------------------------------------*/
 
-aside#profile {
-  grid-area: profile;
-}
-section#introduction {
-  grid-area: introduction;
-}
-section#skills {
-  grid-area: skills;
-}
-section#achievements {
-  grid-area: achievements;
-}
-
-#wrapper > aside, #wrapper > section { 
+nav#main-menu, aside#profile, main#main-content > div { 
   background-color: white;
-  box-shadow      : 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-  padding         : var(--wrapperMargin);
+  box-shadow      : 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.12);
+  padding         : 1rem;
 }
 
+/* -- NAVIGATION (nav) --- */
+nav#main-menu {
+  position        : fixed;
+  z-index         : 10;
+  display         : flex;
+  flex-direction  : row;
+  justify-content : center; align-items: center;
+  background-color: white;
+  width           : 100vw;
+  height          : var(--navHeight);
+}
+  nav#main-menu ul {
+    display        : flex; flex-direction: row;
+    width          : 50vw;
+    justify-content: space-around;
+    list-style     : none;
+    padding        : 0;
+  }
+
+/* --- WRAPPER --- */
+div#wrapper {
+  position: relative;
+  top: var(--navHeight);
+}
 
 /* --- PROFIL (aside) --- */
-section#personal-details {
-  display       : flex;
-  flex-direction: column;
+aside#profile {
+  position: fixed;
+  width   : var(--extra-large-profile-column);
+  height  : calc(100vh - var(--navHeight));
 }
-  section#personal-details h2 {
-    text-align: center;
+
+  section#personal-details {
+    display       : flex;
+    flex-direction: column;
   }
-  address ul {
-    list-style: none;
-    padding   : 0;
-  }
-  address ul li {
-    line-height: calc(var(--baseline) * 2);
-  }
+    section#personal-details h2, section#personal-details h3 {
+      margin-bottom: 0;
+      text-align   : center;
+    }
+    section#personal-details p {
+      text-align: justify;
+    }
+    address ul {
+      list-style: none;
+      padding   : 0;
+    }
+    address ul li {
+      line-height: calc(var(--baseline) * 2);
+    }
       .material-icons {
         vertical-align: middle;
       }
+      
+        i[class^="devicons "] {
+          font-size: 2em;
+          border   : dashed 1px var(--darken-charcoal);
+        }
+        i.devicons-html5 { color: #e34f26; }
+        i.devicons-css3 { color: #264de4;}
+        i.devicons-javascript_badge { color: #f7df1e; }
 
-/* --- INTRODUCTION (1st section) --- */
-section#introduction p {
-  text-align: justify;
+@media only screen and (max-width: 1200px) {
+  div#wrapper {
+    top: calc(var(--navHeight) + var(--grid-gap));
+    display: grid;
+    grid-template: repeat(2, auto) / calc((var(--large-main-column) * 2) + var(--grid-gap));
+    grid-template-areas:
+      "profile"
+      "main-content";
+    justify-content: center;
+  }
+
+  aside#profile {
+    position: static;
+    grid-area: profile;
+    width: auto;
+    height: auto;
+    border-radius: 8px;
+  }
+    section#personal-details {
+      flex-direction: row;
+      align-items: center;
+    } 
+      section#personal-details article {
+        display: flex;
+        flex-direction: column;
+      }
+  main#main-content {
+    grid-area: main-content;
+    width: auto!important; left: 0!important;
+    grid-template      : repeat(3, 1fr) / var(--large-main-column);
+  }
 }
 
-/* --- SKILLS (2nd section) -- */
-i[class^="devicons "] {
-  font-size: 2em;
-  border: dashed 1px var(--darken-charcoal);
+/* --- MAIN CONTENT (main) --- */
+
+main#main-content {
+  position           : relative;
+  left               : var(--extra-large-profile-column);
+  display            : grid;
+  width              : calc(100vw - var(--extra-large-profile-column) - var(--grid-gap));
+  height             : calc(100vh - var(--navHeight));
+  margin             : 0;
+  padding            : 1rem;
+  grid-template      : repeat(3, 1fr) / repeat(2, var(--extra-large-main-column));
+  gap                : 1rem;
+  grid-template-areas: 
+    "profile-card location"
+    "bio bio"
+    "experience experience";
+  justify-content: center;
 }
-i.devicons-html5 { color: #e34f26; }
-i.devicons-css3 { color: #264de4;}
-i.devicons-javascript_badge { color: #f7df1e; }
+
+div#profile-card { grid-area: profile-card; }
+div#location { grid-area: location; }
+div#bio { grid-area: bio; }
+div#experience { grid-area: experience; }
+
+@media only screen and (max-width: 1600px) {
+  main#main-content {
+    grid-template-columns: repeat(2, var(--large-main-column));
+  }
+}
+
+  main p {
+    text-align: justify;
+  }
+
+  main#main-content > div {
+    border-radius: 8px;
+  }

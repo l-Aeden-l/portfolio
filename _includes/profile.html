@@ -1,27 +1,32 @@
-<aside id="profile">
+
   <section id="personal-details">
     {% for profile in site.data.profile %}
-      <img src="{{ profile.img_profile }}" alt="Avatar">
-      <h2>
-        <small>
-          {{ profile.firstname }}
-          {{ profile.lastname }}
-        </small>  
-      </h2>
-      <address>
-        <ul>
-          <li>
-            <i class="material-icons">{{ profile.location.class }}</i>
-            {{ profile.location.city }}
-          </li>
-          <li>
-            <i class="material-icons">{{ profile.contact.class }}</i>
-            <a href="mailto:{{ profile.contact.email }}" target="_blank">
-              {{ profile.contact.text }}
-            </a>     
-          </li>    
-        </ul>
-      </address>
+      <figure>
+        <img src="{{ profile.img_profile }}" alt="Avatar">
+      </figure>
+      <article>
+        <h2>
+          <small>
+            {{ profile.firstname }}
+            {{ profile.lastname }}
+          </small>  
+        </h2>
+        <h3><small>{{ profile.status }}</small></h3>
+        <p>{{ profile.mini-bio }}</p>
+        <address>
+          <ul>
+            <li>
+              <i class="material-icons">{{ profile.location.class }}</i>
+              {{ profile.location.city }}
+            </li>
+            <li>
+              <i class="material-icons">{{ profile.contact.class }}</i>
+              <a href="mailto:{{ profile.contact.email }}" target="_blank">
+                {{ profile.contact.text }}
+              </a>     
+            </li>    
+          </ul>
+        </address>
+      </article>
     {% endfor%}
   </section>
-</aside>

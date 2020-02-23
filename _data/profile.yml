@@ -2,6 +2,11 @@
   lastname: "HAUGUEL"
   img_profile: "/assets/img/data/profile/frederic_hauguel.png"
   status: "Autodidacte"
+  mini-bio: >
+    Curieux chronique, heureux d'apprendre de nouvelles choses
+    et s'en émerveiller avec les yeux d'un enfant. J'aime les 
+    langues, la programmation, le graphisme, la musique et le
+    chant ainsi que notre belle langue française :)
   location:
     class: "person_pin_circle"
     city: "Larmor-Plage"

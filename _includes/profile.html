@@ -1,8 +1,8 @@
 
-  <section id="personal-details">
+  <section class="profile__personal-details">
     {% for profile in site.data.profile %}
       <figure>
-        <img src="{{ profile.img_profile }}" alt="Avatar">
+        <img src="{{ profile.img_profile | prepend: site.baseurl }}" alt="Avatar">
       </figure>
       <article>
         <h2>
@@ -27,6 +27,5 @@
             </li>    
           </ul>
         </address>
-      </article>
     {% endfor%}
   </section>

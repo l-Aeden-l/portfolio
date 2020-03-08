@@ -4,29 +4,35 @@
  * Methodology   : Best practices CSS (https://cssguidelin.es/)
  * Code editor   : Visual Studio Code
  * Extension used: Better align (ctrl + shift + a)
+ * This stylesheet is used with Jekyll + Livereload (bundle exec jekyll serve --livereload)
  * -------------------------------
  * 
  * TABLE OF CONTENTS: 
  * -------------------------------
  * - FONTS
- *     OpenSans regular...........Main font of the website
- *     Material icons.............Use Google icons
+ *     OpenSans regular................Main font of the website
+ *     Material icons..................Used for basic icons (place, contact, etc.)
+ *     Dev icons.......................Used for development languages and tools
  * - VARIABLES
- *     Colors.....................FLAT DESIGN COLORS
- *     Screen sizes...............Small, medium, large and extra large
- *     Profil column size.........Adapt the profile column width according to the screen
- *     Fonts......................Ratio calculation for titles and text sizes
- *     Nav bar height.............Calculate the content position (profil column, main content) according to the nav bar
+ *     Colors..........................FLAT DESIGN COLORS
+ *     Screen sizes....................Small, medium, large and extra large
+ *     Fonts...........................Ratio calculation for titles and text sizes
+ *     Nav bar height..................
+ *     Screen calculations.............For profile and main content blocks' arrangement
+ *       Profil column size............For large screen as a fixed position sidebar
+ *       Main content column...........Different sizes according to the screen
  * - CUSTOM CLASSES
- *     Box shadows................
+ *     Box shadows.....................
  * - BASE
- *     General settings...........Unavoidable values to set (title, link, etc.)
+ *     General settings................Unavoidable values to set (title, link, etc.)
  * - COMPONENTS
- *     Navigation.................Navigate through the different sections
- *     Profil.....................Useful informations as localisation, phone, social network, etc.
- *     Introduction...............A short introduction about me
- *     Skills.....................A list of knowledge that I acquired
- *.....Achievements...............Some of my creations
+ *     Common box styles...............Same background color, shadow and padding for boxes
+ *     Navigation......................Navigate through the different sections
+ *     Wrapper.........................Main grid to wrap the profil sidebar and main content on mobile
+ *       Profil..........................Useful informations as localisation, phone, social network, etc.
+ *       Introduction....................A short introduction about me
+ *       Skills..........................A list of knowledge that I acquired
+ *       Achievements....................Some of my creations
  *
  * -------------------------------
  * Breakpoints reminder
@@ -69,13 +75,15 @@
 \*------------------------------------*/
 
 :root {
-  /**
+  /*
+   ***
    * FLAT DESIGN COLORS
-   * https       :          //laochao.github.io/Colors/flat.html
-   * The used one: https:   //color.koya.io/
-   * --------------------------------
+   * https://laochao.github.io/Colors/flat.html
+   * The used one: https://color.koya.io/
+   ***
    * Other interesting color palettes: 
-   * https                           :   //flatuicolors.com/
+   * https://flatuicolors.com/
+   ***
    */
   --mint              : #48CFAD;
   --darken-mint       : #37BC9B;
@@ -100,13 +108,13 @@
   --charcoal          : #3C3B3D;
   --darken-charcoal   : #323133;
 
-  /* --- Screen sizes --- */
-  --small-dev      : calc(660px);
-  --medium-dev     : calc(768px);
-  --large-dev      : calc(992px);
-  --extra-large-dev: calc(1200px);
+  /*** Screen sizes ***/
+  --regular-mobile-screen: 660px;
+  --big-mobile-screen    : 768px;
+  --regular-PC-screen    : 992px;
+  --big-PC-screen        : 1200px;
 
-  /* --- Fonts --- */
+  /*** Fonts ***/
   --baseline          : 0.90rem;
   --title-margin-ratio: 0.50;
   --h1                : calc(var(--baseline) * 2.50);
@@ -121,19 +129,20 @@
   --h5-margin         : calc(var(--h5) * var(--title-margin-ratio));
   --regular           : calc(var(--baseline) * 1.25);
 
-  /* --- Nav height --- */
+  /*** Nav height ***/
   --navHeight: 60px;
 
-  /* --- Profile column size --- */
-  --one-quarter-extra-large: calc(var(--extra-large-dev) / 4);
-  --one-fifth-of-one-quarter-extra-large: calc(var(--one-quarter-extra-large) / 4);
-  --large-profile-col: calc(var(--large-dev) / 4);
-  --extra-large-profile-column : calc(var(--extra-large-dev) / 4);
+  /*** Screen calculations (for profile and main content blocks' arrangement) ***/
+  --one-quarter-big-PC-screen             : calc(var(--big-PC-screen) / 4);                  /* 1200 / 4 = 300 */
+  --one-quarter-of-one-quarter-extra-large: calc(var(--one-quarter-big-PC-screen) / 4);      /* 300 / 4 = 75 */
+  --grid-gap                              : 1rem;
 
-  /* --- Main content width --- */
-  --grid-gap: 1rem;
-  --large-main-column: calc((var(--one-quarter-extra-large) * 2) - (2 * var(--one-fifth-of-one-quarter-extra-large)) - (2 * var(--grid-gap)));
-  --extra-large-main-column: calc((var(--one-quarter-extra-large) * 2) - (2 * var(--grid-gap)));
+  /*** Profile column size ***/
+  --profile-column             : calc(var(--one-quarter-big-PC-screen ));
+
+  /*** Main content column sizes ***/
+  --regular-main-content-column: calc((var(--one-quarter-big-PC-screen) * 2) - (2 * var(--one-quarter-of-one-quarter-extra-large)));
+  --big-main-content-column    : calc((var(--one-quarter-big-PC-screen) * 2));
 }
 
   @media only screen and (max-width: 768px) {
@@ -144,9 +153,9 @@
 
 
 
-/*------------------------------------*\
-  #CUSTOM CLASSES
-\*------------------------------------*/
+/* ================================== *\
+   #CUSTOM CLASSES
+\* ================================== */
 
 /* --- Box shadows ---*/
 .box-shadow-depth-1 {
@@ -169,9 +178,11 @@
   box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
 }
 
-/*------------------------------------*\
-  #BASE
-\*------------------------------------*/
+
+
+/* ================================== *\
+   #BASE
+\* ================================== */
 
 /* --- General settings --- */
 *, *:before, *:after {
@@ -205,16 +216,13 @@ h5 {
   font-size: var(--h5);
   margin   : var(--h5-margin) 0;
 }
-
 body {
   font-size: var(--regular);
 }
-
 img {
   width : 100%;
   height: auto;
 }
-
 a {
   text-decoration: none;
   color          : var(--darken-charcoal);
@@ -222,145 +230,276 @@ a {
 
 
 
-/*------------------------------------*\
-  #COMPONENTS
-\*------------------------------------*/
+/* ================================== *\
+   #COMPONENTS
+\* ================================== */
 
-nav#main-menu, aside#profile, main#main-content > div { 
+ /* Common box styles */
+.main-header, .profile, .main-content > div { 
   background-color: white;
   box-shadow      : 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.12);
-  padding         : 1rem;
+  padding         : var(--grid-gap);
 }
 
-/* -- NAVIGATION (nav) --- */
-nav#main-menu {
+.main-header__navigation ul, .profile__personal-details ul {
+  padding: 0;
+  list-style: none;
+}
+
+/** -----------------
+ *  [ PHONE DEVICES ]
+ ** -----------------
+ */
+
+/* NAVIGATION */
+.main-header {
   position        : fixed;
   z-index         : 10;
   display         : flex;
-  flex-direction  : row;
-  justify-content : center; align-items: center;
+  align-content   : center;
   background-color: white;
   width           : 100vw;
-  height          : var(--navHeight);
-}
-  nav#main-menu ul {
-    display        : flex; flex-direction: row;
-    width          : 50vw;
-    justify-content: space-around;
-    list-style     : none;
-    padding        : 0;
-  }
-
-/* --- WRAPPER --- */
-div#wrapper {
-  position: relative;
-  top: var(--navHeight);
+  min-height      : var(--navHeight);
+  padding         : 0 var(--grid-gap); 
 }
 
-/* --- PROFIL (aside) --- */
-aside#profile {
-  position: fixed;
-  width   : var(--extra-large-profile-column);
-  height  : calc(100vh - var(--navHeight));
-}
-
-  section#personal-details {
+  .main-header__wrapper {
     display       : flex;
-    flex-direction: column;
-  }
-    section#personal-details h2, section#personal-details h3 {
-      margin-bottom: 0;
-      text-align   : center;
-    }
-    section#personal-details p {
-      text-align: justify;
-    }
-    address ul {
-      list-style: none;
-      padding   : 0;
-    }
-    address ul li {
-      line-height: calc(var(--baseline) * 2);
-    }
-      .material-icons {
-        vertical-align: middle;
-      }
-      
-        i[class^="devicons "] {
-          font-size: 2em;
-          border   : dashed 1px var(--darken-charcoal);
-        }
-        i.devicons-html5 { color: #e34f26; }
-        i.devicons-css3 { color: #264de4;}
-        i.devicons-javascript_badge { color: #f7df1e; }
-
-@media only screen and (max-width: 1200px) {
-  div#wrapper {
-    top: calc(var(--navHeight) + var(--grid-gap));
-    display: grid;
-    grid-template: repeat(2, auto) / calc((var(--large-main-column) * 2) + var(--grid-gap));
-    grid-template-areas:
-      "profile"
-      "main-content";
-    justify-content: center;
+    flex-direction: row;
+    width         : 100%;
+    min-height    : inherit;
+    flex-wrap     : wrap;
+    align-items   : center;
   }
 
-  aside#profile {
-    position: static;
-    grid-area: profile;
-    width: auto;
-    height: auto;
-    border-radius: 8px;
-  }
-    section#personal-details {
-      flex-direction: row;
+  .main-header__wrapper > * {
+      width: 50%;
+      -webkit-user-select: none;
+         -moz-user-select: none;
+          -ms-user-select: none;
+              user-select: none;
+    }
+    .main-header__logo {
+      display     : flex;
+      height      : var(--navHeight);
+      margin-right: auto;
+      align-items : center;
+    }
+    
+
+
+    /* 🡇 --- HAMBURGER MENU ICON | START --- 🡇 */
+    .main-header__menu-btn {
+      display: none;
+    }
+    .main-header__menu-icon {
+      position   : relative;
+      display    : flex;
       align-items: center;
-    } 
-      section#personal-details article {
-        display: flex;
-        flex-direction: column;
-      }
-  main#main-content {
-    grid-area: main-content;
-    width: auto!important; left: 0!important;
-    grid-template      : repeat(3, 1fr) / var(--large-main-column);
-  }
-}
+      height     : 32px;
+      width      : 32px;
+      cursor     : pointer;
+    }
+    .main-header__menu-icon span,
+    .main-header__menu-icon span:before,
+    .main-header__menu-icon span:after {
+      position  : absolute;
+      background: var(--charcoal);
+      content   : '';
+      display   : block;
+      height    : 2px;
+      transition: all .2s ease-out;
+      width     : 100%;
+    }
+    .main-header__menu-icon span:before {
+      top: 5px;
+    }
+    .main-header__menu-icon span:after {
+      top: -5px;
+    }
+    .main-header__menu-btn:checked ~ .main-header__menu-icon span:before,
+    .main-header__menu-btn:checked ~ .main-header__menu-icon span:after {
+      top: 0;
+    }
+    .main-header__menu-btn:checked ~ .main-header__menu-icon span {
+      background: transparent;
+    }
+    .main-header__menu-btn:checked ~ .main-header__menu-icon span:before {
+      transform: rotate(-45deg);
+    }
+    .main-header__menu-btn:checked ~ .main-header__menu-icon span:after {
+      transform: rotate(45deg);
+    }
+    /* 🡅 --- HAMBURGER MENU ICON | END --- 🡅 */
 
-/* --- MAIN CONTENT (main) --- */
 
-main#main-content {
-  position           : relative;
-  left               : var(--extra-large-profile-column);
-  display            : grid;
-  width              : calc(100vw - var(--extra-large-profile-column) - var(--grid-gap));
-  height             : calc(100vh - var(--navHeight));
-  margin             : 0;
-  padding            : 1rem;
-  grid-template      : repeat(3, 1fr) / repeat(2, var(--extra-large-main-column));
-  gap                : 1rem;
+
+    /* --- DISPLAY MENU VERTICALLY --- */
+    .main-header__navigation {
+      display: none;
+    }
+    .main-header__navigation ul {
+      display       : flex;
+      flex-direction: column;
+      margin        : var(--grid-gap);
+    }
+    .main-header__menu-btn:checked ~ .main-header__navigation {
+      display       : flex;
+      flex-direction: column;
+    }
+    .main-header__menu-btn:checked ~ .main-header__navigation ul {
+      min-height     : calc((100vh / 3));
+      justify-content: space-evenly;
+    }
+
+/* CONTENT */
+.content-wrapper {
+  position             : relative;
+  top                  : var(--navHeight);
+  display              : grid;
+  grid-template-rows   : repeat(2, auto);
+  grid-template-columns: minmax(auto, calc((var(--regular-main-content-column) * 2)));
+  padding              : var(--grid-gap);
+  gap                  : var(--grid-gap);
   grid-template-areas: 
-    "profile-card location"
-    "bio bio"
-    "experience experience";
+    "profile"
+    "main-content";
   justify-content: center;
 }
 
-div#profile-card { grid-area: profile-card; }
-div#location { grid-area: location; }
-div#bio { grid-area: bio; }
-div#experience { grid-area: experience; }
-
-@media only screen and (max-width: 1600px) {
-  main#main-content {
-    grid-template-columns: repeat(2, var(--large-main-column));
-  }
-}
-
-  main p {
-    text-align: justify;
-  }
-
-  main#main-content > div {
+  .profile {
+    grid-area    : profile;
     border-radius: 8px;
   }
+    .profile__personal-details {
+      display       : flex;
+      flex-direction: column;
+      align-items   : center;
+    } 
+    .profile__personal-details h2, .profile__personal-details h3 {
+      margin-bottom: 0;
+      text-align   : center;
+    }
+    .profile__personal-details p {
+      text-align: justify;
+    }
+      .profile__personal-details article {
+        display       : flex;
+        flex-direction: column;
+      }
+      .profile__personal-details article address ul li {
+        line-height: calc(var(--baseline) * 2);
+      }
+        .material-icons {
+          vertical-align: middle;
+        }
+
+  .main-content {
+    position           : relative;
+    display            : grid;
+    grid-area          : main-content;
+    grid-template      : repeat(3, 1fr) / 1fr;
+    gap                : var(--grid-gap);
+    grid-template-areas: 
+    "profile-card"
+    "location"
+    "bio"
+    "experience";
+    justify-content: center;
+  }
+  
+    .profile-card {
+      grid-area: profile-card;
+    }
+    .location {
+      grid-area: location;
+    }
+    .bio {
+      grid-area: bio;
+    }
+    .experience {
+      grid-area: experience;
+    }
+  
+    .main-content > div {
+      border-radius: 8px;
+    }
+
+/** --------------------
+ *  [ TABLETTE DEVICES ]
+ ** --------------------
+ * A header which contains a wrapper that we can center
+ */
+@media only screen and (min-width: 768px) {
+  /* NAVIGATION */
+  .main-header__logo {
+    flex: 1;
+  }
+  .main-header__menu-icon {
+    display: none;
+  }
+  .main-header__navigation {
+    flex   : 4;
+    display: flex;
+    width  : auto;
+  }
+    .main-header__navigation ul {
+      flex-direction : row;
+      width          : 100%;
+      height         : auto;
+      justify-content: space-around;
+    }
+
+  /* CONTENT */
+  .profile__personal-details {
+    flex-direction: row;
+    align-items   : center;
+  }
+    .profile__personal-details article {
+      display       : flex;
+      flex-direction: column;
+    }
+}
+
+@media only screen and (min-width: 992px) {
+  .main-content {
+    display: grid;
+    grid-template-columns : repeat(2, calc(var(--regular-main-content-column) - (var(--grid-gap) / 2)));
+    grid-template-areas: 
+      "profile-card location"
+      "bio bio"
+      "experience experience";
+  }
+  }
+
+@media only screen and (min-width: 1200px) {
+  .content-wrapper {
+    display: block;
+    padding: 0;
+  }
+    .profile {
+      position: fixed;
+      border-radius: 0;
+      width   : var(--profile-column);
+      height  : calc(100vh - var(--navHeight));
+    }
+      .profile__personal-details {
+        flex-direction: column;
+      }
+    .main-content {
+      display              : grid;
+      grid-template-columns : repeat(2, calc(var(--regular-main-content-column) - (3 * var(--grid-gap))));
+      justify-content: center;
+
+      position             : relative;
+      left                 : calc(var(--profile-column));
+      width                : calc((100vw - var(--profile-column)) - (3 * var(--grid-gap)));
+      padding: var(--grid-gap);
+    }
+}
+
+@media only screen and (min-width: 1600px) {
+  .main-content {
+    grid-template-columns : repeat(2, calc(var(--big-main-content-column) - (3 * var(--grid-gap))));
+  }
+}

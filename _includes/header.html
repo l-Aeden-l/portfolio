@@ -8,13 +8,20 @@
   <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/styles.css">
 </head>
 <body>
-  <nav id="main-menu">
-    <ul>
-      <li><a href="{{ site.baseurl }}/index.html">Qui suis-je ?</a></li>
-      <li><a href="{{ site.baseurl }}/skills.html">Compétences</a></li>
-      <li><a href="{{ site.baseurl }}/achievements.html">Réalisation</a></li>
-      <li><a href="{{ site.baseurl }}/contact.html">Contact</a></li>
-    </ul>
-  </nav>
+  <header class="main-header">
+    <div class="main-header__wrapper">
+      <a href="" class="main-header__logo"><span>Test</span></a>
+      <input id="menu-btn" class="main-header__menu-btn" type="checkbox" />
+      <label for="menu-btn" class="main-header__menu-icon"><span></span></label>
+      <nav class="main-header__navigation">
+        <ul>
+          <li><a href="{{ site.baseurl }}/index.html">Qui suis-je ?</a></li>
+          <li><a href="{{ site.baseurl }}/skills.html">Compétences</a></li>
+          <li><a href="{{ site.baseurl }}/achievements.html">Réalisation</a></li>
+          <li><a href="{{ site.baseurl }}/contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
 
-  <div id="wrapper">
+  <div class="content-wrapper">

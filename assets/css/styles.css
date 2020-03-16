@@ -134,14 +134,15 @@
 
   /*** Screen calculations (for profile and main content blocks' arrangement) ***/
   --one-quarter-big-PC-screen             : calc(var(--big-PC-screen) / 4);                  /* 1200 / 4 = 300 */
-  --one-quarter-of-one-quarter-extra-large: calc(var(--one-quarter-big-PC-screen) / 4);      /* 300 / 4 = 75 */
+  --one-quarter-regular-PC-screen         : calc(var(--regular-PC-screen) / 4);                  /* 992 / 4 = 248 */
+  --one-quarter-of-one-quarter-regular-PC-screen: calc( var(--one-quarter-regular-PC-screen) / 4);
   --grid-gap                              : 1rem;
 
   /*** Profile column size ***/
   --profile-column             : calc(var(--one-quarter-big-PC-screen ));
 
   /*** Main content column sizes ***/
-  --regular-main-content-column: calc((var(--one-quarter-big-PC-screen) * 2) - (2 * var(--one-quarter-of-one-quarter-extra-large)));
+  --regular-main-content-column: calc( (var(--one-quarter-regular-PC-screen) * 2) - var(--one-quarter-of-one-quarter-regular-PC-screen)  - (var(--grid-gap) / 2) );
   --big-main-content-column    : calc((var(--one-quarter-big-PC-screen) * 2));
 }
 
@@ -360,13 +361,12 @@ a {
   top                  : var(--navHeight);
   display              : grid;
   grid-template-rows   : repeat(2, auto);
-  grid-template-columns: minmax(auto, calc((var(--regular-main-content-column) * 2)));
+  grid-template-columns: minmax(auto, calc( 2 * var(--regular-main-content-column) ));
   padding              : var(--grid-gap);
   gap                  : var(--grid-gap);
   grid-template-areas: 
     "profile"
     "main-content";
-  justify-content: center;
 }
 
   .profile {
@@ -400,29 +400,30 @@ a {
     position           : relative;
     display            : grid;
     grid-area          : main-content;
-    grid-template      : repeat(3, auto) / 1fr;
+    grid-template      : repeat(3, auto) / auto;
     gap                : var(--grid-gap);
     grid-template-areas: 
     "profile-card"
     "location"
     "bio"
     "experience";
-    justify-content: center;
   }
-  .main-content > div {
-    --content-height: calc( 100vh - var(--navHeight) - (2 * var(--grid-gap)) );
-    --grid-cell-height: calc( var(--content-height) / 3 - var(--grid-gap) );
-    min-height: var(--grid-cell-height);
-    height: auto;
-  }
+
     .profile-card {
       grid-area: profile-card;
     }
+      .profile-card ul {
+        list-style     : none;
+        padding        : 0;
+      }
+        .profile-card ul li {
+          display: inline-block;
+        }
     .location {
       grid-area: location;
     }
       #map {
-        width: 100%;
+        width : 100%;
         height: 250px;
       }
     .bio {
@@ -461,59 +462,55 @@ a {
     }
 
   /* CONTENT */
-  .profile__personal-details {
-    flex-direction: row;
-    align-items   : center;
+  .content-wrapper {
+    justify-content: center;
   }
-    .profile__personal-details article {
-      display       : flex;
-      flex-direction: column;
+    .profile__personal-details {
+      flex-direction: row;
     }
 }
 
 @media only screen and (min-width: 992px) {
+  .content-wrapper {
+    grid-template-columns: repeat(2, var(--regular-main-content-column));
+    grid-template-areas  : 
+    "profile profile"
+    "main-content main-content";
+  }
   .main-content {
-    grid-template-columns : repeat(2, calc(var(--regular-main-content-column) - (var(--grid-gap) / 2)));
-    grid-template-areas: 
+    grid-template-columns: repeat(2, var(--regular-main-content-column));
+    grid-template-areas  : 
       "profile-card location"
       "bio bio"
       "experience experience";
   }
-  }
+}
 
 @media only screen and (min-width: 1200px) {
-  .main-header__wrapper {
-    width: 90%;
-  }
   .content-wrapper {
     display: block;
     padding: 0;
   }
     .profile {
-      position: fixed;
+      position     : fixed;
       border-radius: 0;
-      width   : var(--profile-column);
-      height  : calc(100vh - var(--navHeight));
+      width        : var(--profile-column);
+      height       : calc(100% - var(--navHeight));
     }
       .profile__personal-details {
         flex-direction: column;
       }
     .main-content {
-      grid-template-columns : repeat(2, calc(var(--regular-main-content-column) - (3 * var(--grid-gap))));
+      position       : relative;
+      left           : calc(var(--profile-column));
+      width          : calc(100% - var(--profile-column));
       justify-content: center;
-
-      position             : relative;
-      left                 : calc(var(--profile-column));
-      width                : calc((100vw - var(--profile-column)) - var(--grid-gap));
-      padding: var(--grid-gap);
+      padding        : var(--grid-gap);
     }
 }
 
 @media only screen and (min-width: 1600px) {
-  .main-header__wrapper {
-    width: 85%;
-  }
   .main-content {
-    grid-template-columns : repeat(2, calc(var(--big-main-content-column) - var(--grid-gap)));
+    grid-template-columns : repeat(2, calc(var(--big-main-content-column)));
   }
 }

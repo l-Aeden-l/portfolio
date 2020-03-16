@@ -1,0 +1,14 @@
+- birth_city: "Rouen"
+  birth_day: 308703600000
+  hobbies:
+    - class: "music_note"
+      tag: "Musique"
+    - class: "gamepad"
+      tag: "Jeux vidéo"
+  inclination:
+    - class: "accessibility_new"
+      tag: "Humanisme"
+    - class: "eco"
+      tag: "Nature"
+    - class: "computer"
+      tag: "Technologie"

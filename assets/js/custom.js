@@ -1,4 +1,17 @@
 
+  // Calculate age from timestamp for about me section
+  (() => {
+    let aboutMeAge = document.querySelector("#aboutMeAge");
+    let ageTimestamp = parseInt(aboutMeAge.dataset.birthday);
+    var today = new Date();
+    var birthDate = new Date(ageTimestamp);
+    var age = today.getFullYear() - birthDate.getFullYear();
+    var m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age = age - 1;
+    }
+    aboutMeAge.innerHTML = age;
+  })();
 
   // https://www.coordonnees-gps.fr/
   let myMap;

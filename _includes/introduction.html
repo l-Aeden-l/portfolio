@@ -2,18 +2,20 @@
 <div class="profile-card">
   <h2><small>Un peu plus sur moi</small></h2>
   {% for about_me in site.data.about-me %}
-  <p><strong>Natif de : </strong>{{ about_me.birth_city }}</p>
-  <p><strong>Âge : </strong><span id="aboutMeAge" data-birthday="{{ about_me.birth_day }}"></span></p>
-  <p>Hobbies : </p>
-  <ul>
-    {% for hobbie in about_me.hobbies %}
-    <li>
-      <i class="material-icons">{{ hobbie.class }}</i>
-      {{ hobbie.tag }}
-    </li>
+  <p class="profile-card__birth-city"><strong>Natif de : </strong>{{ about_me.birth_city }}</p>
+  <p class="profile-card__birth-day"><strong>Âge : </strong><span id="aboutMeAge" data-birthday="{{ about_me.birth_day }}"></span></p>
+  <div class="profile-card__hobbies">
+    <p><strong>Hobbies : </strong></p>
+    <ul>
+      {% for hobbie in about_me.hobbies %}
+      <li>
+        <i class="material-icons">{{ hobbie.class }}</i>
+        <span>{{ hobbie.tag }}</span>
+      </li>
+      {% endfor %}
+    </ul>
     {% endfor %}
-  </ul>
-  {% endfor %}
+  </div>
 </div>
 <div class="location">
   <div id="map"></div>
